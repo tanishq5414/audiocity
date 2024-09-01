@@ -25,7 +25,10 @@ class ListRecordingsPage extends StatelessWidget {
                               .split('/')
                               .last),
                           trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.shareRecording(
+                                  controller.recordings[index].path);
+                            },
                             icon: const Icon(Icons.play_arrow),
                           ),
                         );

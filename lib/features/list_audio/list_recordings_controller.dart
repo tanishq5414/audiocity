@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:psventuresassignment/core/repository/storage_repository.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ListRecordingsController extends GetxController {
   StorageRepository storageRepository = StorageRepository();
@@ -24,5 +25,10 @@ class ListRecordingsController extends GetxController {
 
   void deleteRecording(String path) {
     // delete the recording
+  }
+
+  void shareRecording(String path) async{
+    XFile file = await storageRepository.getFile(path)??XFile('');
+    Share.shareXFiles([file]);
   }
 }

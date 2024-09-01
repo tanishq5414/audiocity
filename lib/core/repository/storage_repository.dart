@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 
 class IStorageRepository {
   void getFolder() {}
@@ -9,6 +10,7 @@ class IStorageRepository {
   void checkPermission() {}
   void saveFile(String path) {}
   void getAllFiles() {}
+  void getFile(String path) {}
 }
 
 class StorageRepository implements IStorageRepository {
@@ -44,6 +46,17 @@ class StorageRepository implements IStorageRepository {
       String newPath = '${_path.path}/${file.path.split('/').last}';
       await file.copy(newPath);
       return newPath;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<XFile?> getFile(String path) async {
+    try {
+      File file = File(path);
+      XFile xfile = XFile(file.path);
+      return xfile;
     } catch (e) {
       return null;
     }
