@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psventuresassignment/routes/app_pages.dart';
-import 'package:psventuresassignment/routes/app_routes.dart';
 
 class NavigationController extends GetxController with GetSingleTickerProviderStateMixin {
   late TabController tabController;

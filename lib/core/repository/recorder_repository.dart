@@ -1,40 +1,56 @@
+import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 class IRecorderRepository {
+  void checkRecordingPermission() {}
   void startRecording() {}
-  void stopRecording() {}
   void pauseRecording() {}
   void resumeRecording() {}
   void saveRecording() {}
-  void deleteRecording() {}
+  void cancelRecording() {}
 }
 
 class RecorderRepository implements IRecorderRepository {
-  @override
-  void startRecording() {
-    // Add code to start recording here
-  }
+  RecorderController recorderController = RecorderController();
+
 
   @override
-  void stopRecording() {
-    // Add code to stop recording here
+  Future<bool> checkRecordingPermission() async {
+    final bool hasPermission = await recorderController.checkPermission();
+    if (!hasPermission) {
+      Permission.microphone.request();
+    }
+    return hasPermission;
+  }
+  @override
+  void startRecording() {
+    recorderController.record();
   }
 
   @override
   void pauseRecording() {
-    // Add code to pause recording here
+    recorderController.pause();
   }
 
   @override
   void resumeRecording() {
-    // Add code to resume recording here
+    recorderController.record();
   }
 
   @override
-  void saveRecording() {
-    // Add code to save recording here
+  Future<String> saveRecording() async {
+    String path = await recorderController.stop()??"";
+    recorderController.elapsedDuration = Duration.zero;
+    return path;
   }
 
   @override
-  void deleteRecording() {
+  void cancelRecording() {
     // Add code to delete recording here
+    recorderController.stop();
+  }
+
+  void dispose() {
+    recorderController.dispose();
   }
 }

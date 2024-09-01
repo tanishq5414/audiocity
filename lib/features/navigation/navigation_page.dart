@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:psventuresassignment/common/tab_bar.dart';
+import 'package:psventuresassignment/features/list_audio/list_recordings_page.dart';
+import 'package:psventuresassignment/features/navigation/navigation_controller.dart';
+import 'package:psventuresassignment/features/record_audio/record_audio_page.dart';
+import 'package:psventuresassignment/features/settings/settings_page.dart';
 
 
 class NavigationPage extends StatelessWidget {
@@ -10,13 +15,20 @@ class NavigationPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: const CommonTabBar(),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              // Add code to record audio here
-            },  
-            child: const Text('Record Audio'),
-          ),
+        body: GetBuilder(
+          init: NavigationController(),
+          builder: (controller) {
+            switch (controller.tabController.index) {
+              case 0:
+                return const RecordAudioPage();
+              case 1:
+                return const ListRecordingsPage();
+              case 2:
+                return const SettingsPage();
+              default:
+                return const RecordAudioPage();
+            }
+          },
         ),
       ),
     );

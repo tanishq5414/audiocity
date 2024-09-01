@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psventuresassignment/features/navigation/navigation_page.dart';
 
 
 class SettingsPage extends StatelessWidget {
@@ -14,7 +13,7 @@ class SettingsPage extends StatelessWidget {
             onPressed: () {
               // Add code to record audio here
             },  
-            child: const Text('Record Audio'),
+            child: const Text('Settings Page'),
           ),
         ),
       ),
