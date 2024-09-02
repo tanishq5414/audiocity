@@ -14,7 +14,7 @@ class NavigationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
-        length: 3,// fix later
+        length: 3,
         child: Scaffold(
           appBar: const CommonTabBar(),
           resizeToAvoidBottomInset: false,

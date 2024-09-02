@@ -1,11 +1,10 @@
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psventuresassignment/common/snack_bar.dart';
 import 'package:psventuresassignment/constants/interaction_messages.dart';
 import 'package:psventuresassignment/core/repository/recorder_repository.dart';
 import 'package:psventuresassignment/core/repository/storage_repository.dart';
-import 'package:psventuresassignment/features/record_audio/widgets/filename_input.dart';
+import 'package:psventuresassignment/features/record_audio/widgets/file_rename_input_widget.dart';
 
 class RecordAudioController extends GetxController{
   RecorderRepository recorderRepository = RecorderRepository();

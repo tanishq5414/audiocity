@@ -6,6 +6,7 @@ import 'package:line_icons/line_icon.dart';
 import 'package:psventuresassignment/common/icon_button.dart';
 import 'package:psventuresassignment/features/record_audio/record_audio_controller.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
+import 'package:psventuresassignment/themes/styles.dart';
 
 class RecordAudioPage extends StatelessWidget {
   const RecordAudioPage({super.key});
@@ -49,12 +50,8 @@ class RecordAudioPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(height: 20),
-                              const Text('Record your voice',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  )),
+                              Text('Record your voice',
+                                  style: CustomTextStyles.subTitleTextStyleBold),
                               Container(
                                 margin: const EdgeInsets.symmetric(vertical: 10),
                                 width: size.width,
@@ -78,16 +75,12 @@ class RecordAudioPage extends StatelessWidget {
                                 stream: controller.onCurrentDurationChanged,
                                 builder: (context, snapshot) {
                                   var duration =
-                                      snapshot.data?.toHHMMSS() ?? '00:00:00';
+                                      snapshot.data?.toHHMMSS() ?? '00:00';
                                   return Text(
                                     snapshot.data != null
                                         ? duration.split(":").sublist(1).join(":")
-                                        : '00:00:00',
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                        : '00:00',
+                                    style: CustomTextStyles.titleTextStyleBold,
                                   );
                                 },
                               ),

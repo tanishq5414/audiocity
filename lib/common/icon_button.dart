@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
+import 'package:psventuresassignment/themes/styles.dart';
 
 class CommonIconButton extends StatelessWidget {
   final Icon icon;
@@ -28,7 +29,6 @@ class CommonIconButton extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               color: color,
-              // shape: BoxShape.circle,
               borderRadius: BorderRadius.circular(10),
             ),
             child: icon,
@@ -39,12 +39,8 @@ class CommonIconButton extends StatelessWidget {
             ? const SizedBox()
             : Text(
                 subtitle,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+                style: CustomTextStyles.subTitleTextStyleBold,
+            ),
       ],
     );
   }

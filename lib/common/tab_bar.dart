@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:psventuresassignment/constants/icons_path.dart';
 import 'package:psventuresassignment/features/navigation/navigation_controller.dart';
 import 'package:psventuresassignment/routes/app_routes.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
+import 'package:psventuresassignment/themes/styles.dart';
 
 class CommonTabBar extends StatelessWidget implements PreferredSizeWidget {
   const CommonTabBar({
@@ -28,13 +28,9 @@ class CommonTabBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 25,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Image.asset(IconsPath.appIcon)),
-            const Text(
-              'Audio Recorder',
-              style: TextStyle(
-                color: Pallete.blackColor,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+            Text(
+              'Audiocity',
+              style: CustomTextStyles.titleTextStyleBold,
             ),
           ],
         ),
@@ -58,9 +54,6 @@ class CommonTabBar extends StatelessWidget implements PreferredSizeWidget {
                 Tab(
                   child: TabBarPill(
                     isActive: controller.tabController.index == 0,
-                    icon: const LineIcon.microphone(
-                      size: 20,
-                    ),
                     title: AppRoutes.recordAudio.name,
                   ),
                 ),
@@ -68,17 +61,12 @@ class CommonTabBar extends StatelessWidget implements PreferredSizeWidget {
                   child: TabBarPill(
                     title: AppRoutes.listRecordings.name,
                     isActive: controller.tabController.index == 1,
-                    icon: const Icon(Icons.list, size: 20),
                   ),
                 ),
                 Tab(
                   child: TabBarPill(
                     title: AppRoutes.settings.name,
                     isActive: controller.tabController.index == 2,
-                    icon: const Icon(
-                      Icons.settings,
-                      size: 20,
-                    ),
                   ),
                 ),
               ],
@@ -95,12 +83,10 @@ class CommonTabBar extends StatelessWidget implements PreferredSizeWidget {
 
 class TabBarPill extends StatelessWidget {
   final bool isActive;
-  final Icon icon;
   final String title;
   const TabBarPill({
     this.isActive = false,
     required this.title,
-    required this.icon,
     super.key,
   });
 
@@ -124,10 +110,8 @@ class TabBarPill extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               title,
-              style: TextStyle(
+              style: CustomTextStyles.subTitleTextStyleBold.copyWith(
                 color: isActive ? Pallete.secondaryColor : Pallete.blackColor,
-                fontSize: 10,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ],

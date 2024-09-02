@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:psventuresassignment/common/snack_bar.dart';
 import 'package:psventuresassignment/features/settings/settings_controller.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
+import 'package:psventuresassignment/themes/styles.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -19,117 +20,123 @@ class SettingsPage extends StatelessWidget {
                 init: SettingsController(),
                 initState: (_) {},
                 builder: (controller) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      const Text(
-                        'General Settings',
-                        style:
-                            TextStyle(fontSize: 10, color: Pallete.greyColor),
-                      ),
-                      const SizedBox(height: 10),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Dark Mode',
-                            style: TextStyle(
-                                fontSize: 12, color: Pallete.greyColor)),
-                        subtitle: const Text('Enable Dark Mode',
-                            style: TextStyle(
-                                fontSize: 10, color: Pallete.lightGreyColor)),
-                        trailing: Transform.scale(
-                          scale: 0.5,
-                          child: Switch(
-                            value: false,
-                            onChanged: (value) {
+                  return RawScrollbar(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 20),
+                          Text(
+                            'General Settings',
+                            style: CustomTextStyles.subTitleTextStyle,
+                          ),
+                          const SizedBox(height: 10),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text('Dark Mode',
+                                style: CustomTextStyles.bodyTextStyleLarge
+                                    .copyWith(color: Pallete.greyColor)),
+                            subtitle:  Text('Enable Dark Mode',
+                                style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.darkGreyColor)),
+                            trailing: Transform.scale(
+                              scale: 0.5,
+                              child: Switch(
+                                value: false,
+                                onChanged: (value) {
+                                  showCommonSnackBar(
+                                      context, 'Some other day :)');
+                                },
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            height: 0.5,
+                            color: Pallete.darkGreyColor,
+                            thickness: 0.5,
+                          ),
+                          ListTile(
+                            onTap: () {
+                              showCommonSnackBar(context, 'Coming Soon');
+                            },
+                            contentPadding: EdgeInsets.zero,
+                            title: Text('Recording Format',
+                                style: CustomTextStyles.bodyTextStyleLarge
+                                    .copyWith(color: Pallete.greyColor)),
+                            subtitle:  Text('Enable Notifications',
+                                style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.darkGreyColor)),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Advanced Settings',
+                            style: CustomTextStyles.subTitleTextStyle,
+                          ),
+                          const SizedBox(height: 10),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text('Sample Rate',
+                                style: CustomTextStyles.bodyTextStyleLarge
+                                    .copyWith(color: Pallete.greyColor)),
+                            subtitle:  Text('Enable Notifications',
+                                style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.darkGreyColor)),
+                            onTap: () {
                               showCommonSnackBar(context, 'Coming Soon');
                             },
                           ),
-                        ),
+                          const Divider(
+                            height: 0.5,
+                            color: Pallete.darkGreyColor,
+                            thickness: 0.5,
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title:  Text('Ask for filename',
+                                style: CustomTextStyles.bodyTextStyleLarge
+                                    .copyWith(color: Pallete.greyColor)),
+                            subtitle: Text(
+                                'Ask for filename when recording stops',
+                                style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.darkGreyColor)),
+                            trailing: Checkbox(
+                                activeColor: Pallete.secondaryColor,
+                                checkColor: Pallete.whiteColor,
+                                side: BorderSide(color: Pallete.secondaryColor),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                value: controller.askForFileNames,
+                                onChanged: (value) {
+                                  controller.toggleFileNames(context);
+                                }),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Danger Zone',
+                            style: CustomTextStyles.subTitleTextStyle
+                                .copyWith(color: Pallete.redColor),
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title:  Text('Recordings folder',
+                                style: CustomTextStyles.bodyTextStyleLarge
+                                    .copyWith(color: Pallete.greyColor)),
+                            subtitle: Text(
+                              controller.currentPath,
+                              style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.darkGreyColor),
+                            ),
+                            onTap: () {
+                              controller.changeFolderPath(context);
+                            },
+                          ),
+                          Text(
+                              'Changing the folder will delete all the previous recordings',
+                              style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.redColor)),
+                        ],
                       ),
-                      const Divider(
-                        height: 0.5,
-                        color: Pallete.lightGreyColor,
-                        thickness: 0.5,
-                      ),
-                      ListTile(
-                        onTap: () {
-                          showCommonSnackBar(context, 'Coming Soon');
-                        },
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Recording Format',
-                            style: TextStyle(
-                                fontSize: 12, color: Pallete.greyColor)),
-                        subtitle: const Text('Enable Notifications',
-                            style: TextStyle(
-                                fontSize: 10, color: Pallete.lightGreyColor)),
-                      ),
-                      SizedBox(height: 20),
-                      const Text(
-                        'Advanced Settings',
-                        style:
-                            TextStyle(fontSize: 10, color: Pallete.greyColor),
-                      ),
-                      const SizedBox(height: 10),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Sample Rate',
-                            style: TextStyle(
-                                fontSize: 12, color: Pallete.greyColor)),
-                        subtitle: const Text('Enable Notifications',
-                            style: TextStyle(
-                                fontSize: 10, color: Pallete.lightGreyColor)),
-                        onTap: () {
-                          showCommonSnackBar(context, 'Coming Soon');
-                        },
-                      ),
-                      const Divider(
-                        height: 0.5,
-                        color: Pallete.lightGreyColor,
-                        thickness: 0.5,
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Ask for filename',
-                            style: TextStyle(
-                                fontSize: 12, color: Pallete.greyColor)),
-                        subtitle: const Text(
-                            'Ask for filename when recording stops',
-                            style: TextStyle(
-                                fontSize: 10, color: Pallete.lightGreyColor)),
-                        trailing: Checkbox(
-                            activeColor: Pallete.secondaryColor,
-                            checkColor: Pallete.whiteColor,
-                            side: BorderSide(color: Pallete.secondaryColor),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            value: controller.askForFileNames,
-                            onChanged: (value) {
-                              controller.toggleFileNames(context);
-                            }),
-                      ),
-                      SizedBox(height: 20),
-                      const Text(
-                        'Danger Zone',
-                        style: TextStyle(fontSize: 10, color: Pallete.redColor),
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Recordings folder',
-                            style: TextStyle(
-                                fontSize: 12, color: Pallete.greyColor)),
-                        subtitle: Text(controller.currentPath,
-                            style: TextStyle(
-                                fontSize: 10, color: Pallete.lightGreyColor)),
-                        onTap: () {
-                          controller.changeFolderPath(context);
-                        },
-                      ),
-                      Text(
-                          'Changing the folder will delete all the previous recordings',
-                          style:
-                              TextStyle(fontSize: 7, color: Pallete.redColor)),
-                    ],
+                    ),
                   );
                 })),
       ),

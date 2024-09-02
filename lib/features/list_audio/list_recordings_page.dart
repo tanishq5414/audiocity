@@ -6,6 +6,7 @@ import 'package:psventuresassignment/common/icon_button.dart';
 import 'package:psventuresassignment/core/utils/utils.dart';
 import 'package:psventuresassignment/features/list_audio/list_recordings_controller.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
+import 'package:psventuresassignment/themes/styles.dart';
 
 class ListRecordingsPage extends StatelessWidget {
   const ListRecordingsPage({super.key});
@@ -18,7 +19,8 @@ class ListRecordingsPage extends StatelessWidget {
         body: GetBuilder<ListRecordingsController>(
           init: ListRecordingsController(),
           builder: (ListRecordingsController controller) {
-            controller.playerRepository.playerController.onCompletion.listen((event) {
+            controller.playerRepository.playerController.onCompletion
+                .listen((event) {
               controller.onCompletion();
             });
             return controller.recordings.isEmpty
@@ -67,7 +69,7 @@ class ListRecordingsPage extends StatelessWidget {
                                                             .recordings[index]
                                                             .filePath)
                                                 ? const LineIcon
-                                                    .pause() // Show pause icon if this recording is currently playing
+                                                    .pause()
                                                 : const LineIcon.play(),
                                             onPressed: () {
                                               if (controller.isPlaying &&
@@ -116,16 +118,12 @@ class ListRecordingsPage extends StatelessWidget {
                                                     child: Text(
                                                       controller
                                                           .recordings[index]
-                                                          .fileName,
+                                                          .fileName
+                                                          .split('.')
+                                                          .first,
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                        color:
-                                                            Pallete.blackColor,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 10,
-                                                      ),
+                                                      style: CustomTextStyles.bodyTextStyleBold,
                                                     )),
                                                 Row(
                                                   children: [
@@ -142,8 +140,15 @@ class ListRecordingsPage extends StatelessWidget {
                                                         color: Pallete
                                                             .lightGreyColor,
                                                       ),
-                                                      child: const Text('M4A',
-                                                          style: TextStyle(
+                                                      child: Text(
+                                                          controller
+                                                              .recordings[index]
+                                                              .fileName
+                                                              .split('.')
+                                                              .last
+                                                              .toUpperCase(),
+                                                          style:
+                                                              const TextStyle(
                                                             color: Pallete
                                                                 .blackColor,
                                                             fontSize: 8,
@@ -181,19 +186,15 @@ class ListRecordingsPage extends StatelessWidget {
                                                   controller.recordings[index]
                                                       .duration,
                                                 ),
-                                                style: const TextStyle(
-                                                  color: Pallete.darkGreyColor,
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w600,
+                                                style: CustomTextStyles.subTitleTextStyle.copyWith(
+                                                  color: Pallete.lightGreyColor,
                                                 ),
                                               ),
                                               const SizedBox(height: 10),
                                               Text(
-                                                "${controller.recordings[index].fileSize}MB",
-                                                style: const TextStyle(
-                                                  color: Pallete.darkGreyColor,
-                                                  fontSize: 8,
-                                                  fontWeight: FontWeight.w500,
+                                                "${controller.recordings[index].fileSize} MB",
+                                                style: CustomTextStyles.bodyTextStyle.copyWith(
+                                                  color: Pallete.lightGreyColor,
                                                 ),
                                               ),
                                             ],

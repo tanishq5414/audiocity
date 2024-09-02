@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:audio_duration/audio_duration.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:psventuresassignment/constants/enums.dart';
 import 'package:psventuresassignment/models/recording_model.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +24,7 @@ class IStorageRepository {
 }
 
 class StorageRepository implements IStorageRepository {
-  static const _folderName = "PSVentureRecordings";
+  static const _folderName = EnumsList.standardFolderName;
   static var _path = Directory('storage/emulated/0/$_folderName');
 
   @override
@@ -40,8 +41,8 @@ class StorageRepository implements IStorageRepository {
   @override
   Future<bool> checkFileNames() async {
     final prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('askForFileNames')) {
-      return prefs.getBool('askForFileNames')!;
+    if (prefs.containsKey(EnumsList.askForFileNames)) {
+      return prefs.getBool(EnumsList.askForFileNames)!;
     }
     return false;
   }
@@ -49,7 +50,7 @@ class StorageRepository implements IStorageRepository {
   @override
   Future<void> storeFileNames(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('askForFileNames', value);
+    await prefs.setBool(EnumsList.askForFileNames, value);
   }
 
   @override
@@ -80,8 +81,9 @@ class StorageRepository implements IStorageRepository {
     try {
       File file = File(path);
       String newPath = '${_path.path}/${file.path.split('/').last}';
-      if(fileName != null){
-        newPath = '${_path.path}/$fileName';
+      String fileExtension = file.path.split('.').last;
+      if (fileName != null) {
+        newPath = '${_path.path}/$fileName.$fileExtension';
       }
       var externalFile = await file.copy(newPath);
       await storeMetaData(externalFile, externalFile.path.split('/').last);
@@ -116,7 +118,7 @@ class StorageRepository implements IStorageRepository {
       files = await completer.future;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<RecordingModel> recordings = [];
-      prefs.getStringList('recordingsMetaData')?.forEach((element) {
+      prefs.getStringList(EnumsList.recordingsMetaData)?.forEach((element) {
         Map<String, dynamic> metaData = jsonDecode(element);
         if (files.any((element) => element.path == metaData['filePath'])) {
           recordings.add(RecordingModel(
@@ -129,7 +131,7 @@ class StorageRepository implements IStorageRepository {
                 .firstWhere((element) => element.path == metaData['filePath']),
           ));
         } else {
-          prefs.getStringList('recordingsMetaData')?.remove(element);
+          prefs.getStringList(EnumsList.recordingsMetaData)?.remove(element);
         }
       });
       return recordings.reversed.toList();
@@ -159,9 +161,9 @@ class StorageRepository implements IStorageRepository {
       final jsonData = jsonEncode(metaData);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String> previousList =
-          prefs.getStringList('recordingsMetaData') ?? [];
+          prefs.getStringList(EnumsList.recordingsMetaData) ?? [];
       previousList.add(jsonData);
-      await prefs.setStringList('recordingsMetaData', previousList);
+      await prefs.setStringList(EnumsList.recordingsMetaData, previousList);
     } catch (e) {
       return;
     }
@@ -174,7 +176,7 @@ class StorageRepository implements IStorageRepository {
     if (selectedPath == null) return null;
 
     await prefs.setString('path', selectedPath);
-    await prefs.setStringList("recordingsMetaData", []);
+    await prefs.setStringList(EnumsList.recordingsMetaData, []);
     _path = Directory(selectedPath);
 
     return selectedPath;
