@@ -41,25 +41,6 @@ class SettingsPage extends StatelessWidget {
                                 style: CustomTextStyles.bodyTextStyle
                                   .copyWith(color: Pallete.darkGreyColor)),
                           ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text('Dark Mode',
-                                style: CustomTextStyles.bodyTextStyleLarge
-                                    .copyWith(color: Pallete.greyColor)),
-                            subtitle:  Text('Enable Dark Mode',
-                                style: CustomTextStyles.bodyTextStyle
-                                  .copyWith(color: Pallete.darkGreyColor)),
-                            trailing: Transform.scale(
-                              scale: 0.5,
-                              child: Switch(
-                                value: false,
-                                onChanged: (value) {
-                                  showCommonSnackBar(
-                                      context, 'Some other day :)');
-                                },
-                              ),
-                            ),
-                          ),
                           SizedBox(height: 20),
                           Text(
                             'Advanced Settings',
