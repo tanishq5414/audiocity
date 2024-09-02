@@ -6,4 +6,6 @@ class InteractionMessages {
       'Looks like you have disabled storage permission. Please enable it to continue.';
   static const String recordingSaveFailed =
       'Failed to save recording. Please try again.';
+  static const String folderSelectionFailed =
+      'Failed to select folder. Please try again.';
 }

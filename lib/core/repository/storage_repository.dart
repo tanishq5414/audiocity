@@ -3,24 +3,54 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audio_duration/audio_duration.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:psventuresassignment/models/recording_model.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IStorageRepository {
+  void getPath() {}
   void getFolder() {}
   void createFolder() {}
   void checkPermission() {}
-  void saveFile(String path) {}
+  void saveFile(String path, String fileName) {}
   void getAllFiles() {}
   void getFile(String path) {}
   void storeMetaData(File file, String fileName) {}
+  void checkFileNames() {}
+  void storeFileNames(bool value) {}
 }
 
 class StorageRepository implements IStorageRepository {
   static const _folderName = "PSVentureRecordings";
-  final _path = Directory('storage/emulated/0/$_folderName');
+  static var _path = Directory('storage/emulated/0/$_folderName');
+
+  @override
+  Future<String> getPath() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('path')) {
+      final newPath = prefs.getString('path')!;
+      _path = Directory(newPath);
+      return newPath;
+    }
+    return _path.path;
+  }
+
+  @override
+  Future<bool> checkFileNames() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('askForFileNames')) {
+      return prefs.getBool('askForFileNames')!;
+    }
+    return false;
+  }
+
+  @override
+  Future<void> storeFileNames(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('askForFileNames', value);
+  }
 
   @override
   Future<bool> checkPermission() async {
@@ -32,6 +62,7 @@ class StorageRepository implements IStorageRepository {
 
   @override
   Future<Directory> getFolder() async {
+    await getPath();
     if (!await _path.exists()) {
       await createFolder();
     }
@@ -45,12 +76,15 @@ class StorageRepository implements IStorageRepository {
   }
 
   @override
-  Future<String?> saveFile(String path) async {
+  Future<String?> saveFile(String path, String? fileName) async {
     try {
       File file = File(path);
       String newPath = '${_path.path}/${file.path.split('/').last}';
+      if(fileName != null){
+        newPath = '${_path.path}/$fileName';
+      }
       var externalFile = await file.copy(newPath);
-      await storeMetaData(externalFile, file.path.split('/').last);
+      await storeMetaData(externalFile, externalFile.path.split('/').last);
       return newPath;
     } catch (e) {
       return null;
@@ -131,5 +165,18 @@ class StorageRepository implements IStorageRepository {
     } catch (e) {
       return;
     }
+  }
+
+  Future<String?> selectNewFolder() async {
+    String? selectedPath = await FilePicker.platform.getDirectoryPath();
+    final prefs = await SharedPreferences.getInstance();
+
+    if (selectedPath == null) return null;
+
+    await prefs.setString('path', selectedPath);
+    await prefs.setStringList("recordingsMetaData", []);
+    _path = Directory(selectedPath);
+
+    return selectedPath;
   }
 }

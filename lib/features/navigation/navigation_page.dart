@@ -17,6 +17,7 @@ class NavigationPage extends StatelessWidget {
         length: 3,// fix later
         child: Scaffold(
           appBar: const CommonTabBar(),
+          resizeToAvoidBottomInset: false,
           body: GetBuilder(
             init: NavigationController(),
             builder: (controller) {

@@ -50,7 +50,7 @@ class CommonTabBar extends StatelessWidget implements PreferredSizeWidget {
               indicatorWeight: 3,
               labelColor: Pallete.secondaryColor,
               unselectedLabelColor: Pallete.blackColor,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               labelPadding: EdgeInsets.zero,
               onTap: (value) => controller.changeIndex(value),
               controller: controller.tabController,

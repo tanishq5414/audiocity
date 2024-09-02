@@ -1,9 +1,11 @@
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psventuresassignment/common/snack_bar.dart';
 import 'package:psventuresassignment/constants/interaction_messages.dart';
 import 'package:psventuresassignment/core/repository/recorder_repository.dart';
 import 'package:psventuresassignment/core/repository/storage_repository.dart';
+import 'package:psventuresassignment/features/record_audio/widgets/filename_input.dart';
 
 class RecordAudioController extends GetxController{
   RecorderRepository recorderRepository = RecorderRepository();
@@ -46,15 +48,28 @@ class RecordAudioController extends GetxController{
   void saveRecording(context) async{
     isRecording = false;
     String path = await recorderRepository.saveRecording();
+    bool askForFileNames = await storageRepository.checkFileNames();
+    if(askForFileNames){
+      fileNameInputDialog(context, (value)async {
+        var fileName = value;
+        await _saveRecording(path, context , fileName: fileName);
+      });
+    }else{
+      await _saveRecording(path, context);
+    }
+    update();
+  }
+
+  Future<void> _saveRecording(String path, context, {String? fileName}) async {
     if(path.isEmpty){
       showCommonSnackBar(context, InteractionMessages.recordingSaveFailed);
     }
-    final savedPath = await storageRepository.saveFile(path);
+
+    final savedPath = await storageRepository.saveFile(path, fileName);
     if(savedPath == null){
       showCommonSnackBar(context, InteractionMessages.recordingSaveFailed);
     }
     showCommonSnackBar(context, "${InteractionMessages.recordingSaved} $savedPath");
-    update();
   }
 
   void cancelRecording() {
