@@ -17,6 +17,7 @@ class CommonIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
           onTap: () {

@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:audio_duration/audio_duration.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:psventuresassignment/models/recording_model.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IStorageRepository {
   void getFolder() {}
@@ -11,6 +15,7 @@ class IStorageRepository {
   void saveFile(String path) {}
   void getAllFiles() {}
   void getFile(String path) {}
+  void storeMetaData(File file, String fileName) {}
 }
 
 class StorageRepository implements IStorageRepository {
@@ -44,7 +49,8 @@ class StorageRepository implements IStorageRepository {
     try {
       File file = File(path);
       String newPath = '${_path.path}/${file.path.split('/').last}';
-      await file.copy(newPath);
+      var externalFile = await file.copy(newPath);
+      await storeMetaData(externalFile, file.path.split('/').last);
       return newPath;
     } catch (e) {
       return null;
@@ -63,7 +69,7 @@ class StorageRepository implements IStorageRepository {
   }
 
   @override
-  Future<List<FileSystemEntity>?> getAllFiles() async {
+  Future<List<RecordingModel>?> getAllFiles() async {
     List<FileSystemEntity> files = [];
     try {
       var completer = Completer<List<FileSystemEntity>>();
@@ -73,9 +79,57 @@ class StorageRepository implements IStorageRepository {
       }, onDone: () {
         completer.complete(files);
       });
-      return completer.future;
+      files = await completer.future;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<RecordingModel> recordings = [];
+      prefs.getStringList('recordingsMetaData')?.forEach((element) {
+        Map<String, dynamic> metaData = jsonDecode(element);
+        if (files.any((element) => element.path == metaData['filePath'])) {
+          recordings.add(RecordingModel(
+            fileName: metaData['fileName'],
+            filePath: metaData['filePath'],
+            creationDate: metaData['creationDate'],
+            fileSize: metaData['fileSize'],
+            duration: metaData['duration'],
+            file: files
+                .firstWhere((element) => element.path == metaData['filePath']),
+          ));
+        } else {
+          prefs.getStringList('recordingsMetaData')?.remove(element);
+        }
+      });
+      return recordings.reversed.toList();
     } catch (e) {
-      return files;
+      return null;
+    }
+  }
+
+  @override
+  Future<void> storeMetaData(File file, String fileName) async {
+    try {
+      DateTime creationDate = DateTime.now();
+      String fileSize = (await file.length()).toString();
+      fileSize = (int.parse(fileSize) / 1000000).toStringAsFixed(2);
+      int durationInMilliseconds =
+          await AudioDuration.getAudioDuration(file.path) ?? 0;
+      String duration =
+          Duration(milliseconds: durationInMilliseconds).toString();
+
+      final metaData = {
+        'filePath': file.path,
+        'fileName': fileName,
+        'creationDate': creationDate.toString(),
+        'fileSize': fileSize,
+        'duration': duration,
+      };
+      final jsonData = jsonEncode(metaData);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> previousList =
+          prefs.getStringList('recordingsMetaData') ?? [];
+      previousList.add(jsonData);
+      await prefs.setStringList('recordingsMetaData', previousList);
+    } catch (e) {
+      return;
     }
   }
 }

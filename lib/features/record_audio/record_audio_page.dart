@@ -23,9 +23,13 @@ class RecordAudioPage extends StatelessWidget {
               children: [
                 Container(
                   width: size.width,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Pallete.primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(
+                      color: Pallete.teritiaryColor,
+                      width: 0.5,
+                    ),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -42,6 +46,7 @@ class RecordAudioPage extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         width: size.width,
                         child: AudioWaveforms(
+
                             margin: EdgeInsets.zero,
                             padding: EdgeInsets.zero,
                             waveStyle: const WaveStyle(
@@ -50,9 +55,10 @@ class RecordAudioPage extends StatelessWidget {
                               showMiddleLine: true,
                               waveThickness: 6.0,
                               scaleFactor: 100.0,
+                              middleLineThickness: 4.0,
                               waveColor: Pallete.secondaryColor,
                             ),
-                            size: Size(size.width, 200),
+                            size: Size(size.width, 150),
                             recorderController: controller
                                 .recorderRepository.recorderController),
                       ),

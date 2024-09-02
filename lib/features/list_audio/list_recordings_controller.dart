@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:psventuresassignment/core/repository/storage_repository.dart';
+import 'package:psventuresassignment/models/recording_model.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ListRecordingsController extends GetxController {
   StorageRepository storageRepository = StorageRepository();
-  List<FileSystemEntity> recordings = [];
+  List<RecordingModel> recordings = [];
 
   @override
   void onInit() {

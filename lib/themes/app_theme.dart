@@ -21,11 +21,11 @@ class AppTheme {
       labelMedium: TextStyle(color: Pallete.blackColor),
       labelSmall: TextStyle(color: Pallete.blackColor),
     ),
+    scaffoldBackgroundColor: Pallete.backgroundColor,
     highlightColor: Colors.transparent,
     splashColor: Colors.transparent,
     hoverColor: Colors.transparent,
     fontFamily: 'Poppins',
-    scaffoldBackgroundColor: Pallete.backgroundColor,
     appBarTheme: const AppBarTheme(
       backgroundColor: Pallete.backgroundColor,
       elevation: 0,

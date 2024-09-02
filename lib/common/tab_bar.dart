@@ -89,13 +89,13 @@ class TabBarPill extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            icon,
+            // icon,
             Text(
               'Record',
               style: TextStyle(
                 color: isActive ? Pallete.whiteColor : Pallete.blackColor,
                 fontSize: 12,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ],
