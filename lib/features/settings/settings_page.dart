@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:psventuresassignment/common/snack_bar.dart';
 import 'package:psventuresassignment/features/settings/settings_controller.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
 import 'package:psventuresassignment/themes/styles.dart';
