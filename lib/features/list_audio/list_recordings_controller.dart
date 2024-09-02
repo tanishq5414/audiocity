@@ -6,6 +6,7 @@ import 'package:psventuresassignment/models/recording_model.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ListRecordingsController extends GetxController {
+  bool isLoading = false;
   StorageRepository storageRepository = StorageRepository();
   PlayerRepository playerRepository = PlayerRepository();
   List<RecordingModel> recordings = [];
@@ -14,12 +15,15 @@ class ListRecordingsController extends GetxController {
   dynamic waveFormData;
 
   @override
-  void onInit() {
-    getRecordings();
+  void onInit()async {
+    isLoading = true;
+    update();
+    await getRecordings();
+    isLoading = false;
     super.onInit();
   }
 
-  void getRecordings() async {
+  Future getRecordings() async {
     recordings = await storageRepository.getAllFiles()??[];
     update();
   }
