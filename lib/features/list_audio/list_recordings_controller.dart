@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:get/get.dart';
 import 'package:psventuresassignment/core/repository/player_repository.dart';
 import 'package:psventuresassignment/core/repository/storage_repository.dart';
@@ -26,10 +27,11 @@ class ListRecordingsController extends GetxController {
   }
 
   void playRecording(String path)async {
+    if(isPlaying){
+      stopPlaying();
+      update();
+    }
     isPlaying = true;
-    // if(currentAudio!=null){
-    //   stopPlaying();
-    // }
     currentAudio = await storageRepository.getFile(path);
     waveFormData = await playerRepository.getWaveformData(path);
     await playerRepository.startPlaying(path);
@@ -42,6 +44,13 @@ class ListRecordingsController extends GetxController {
   }
 
   void stopPlaying() {
+    isPlaying = false;
+    currentAudio = null;
+    playerRepository.stopPlaying();
+    update();
+  }
+
+  void onCompletion() {
     isPlaying = false;
     currentAudio = null;
     playerRepository.stopPlaying();

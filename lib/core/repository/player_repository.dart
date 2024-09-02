@@ -13,7 +13,7 @@ class PlayerRepository implements IPlayerRepository {
 
   @override
   Future<void> startPlaying(String path) async{
-    await playerController.preparePlayer(path: path, shouldExtractWaveform: true);
+    await playerController.preparePlayer(path: path);
     playerController.startPlayer();
   }
 
@@ -35,7 +35,7 @@ class PlayerRepository implements IPlayerRepository {
 
   @override
   void stopPlaying() {
-    playerController.stopAllPlayers();
+    playerController.stopPlayer();
   }
 
   void dispose() {

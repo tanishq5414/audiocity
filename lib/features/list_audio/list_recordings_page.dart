@@ -18,6 +18,9 @@ class ListRecordingsPage extends StatelessWidget {
         body: GetBuilder<ListRecordingsController>(
           init: ListRecordingsController(),
           builder: (ListRecordingsController controller) {
+            controller.playerRepository.playerController.onCompletion.listen((event) {
+              controller.onCompletion();
+            });
             return controller.recordings.isEmpty
                 ? const Center(
                     child: Text('No recordings found'),
