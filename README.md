@@ -44,7 +44,7 @@ flutter run
 
 ## Authors
 
-- **Your Name** - *Initial work* - [Tanishq5414](https://github.com/tanishq5414)
+- **Tanishq Agarwal** - *Initial work* - [Tanishq5414](https://github.com/tanishq5414)
 
 ## License
 
