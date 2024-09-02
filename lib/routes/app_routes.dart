@@ -6,7 +6,7 @@ class IRoute{
 }
 
 class AppRoutes {
-  static const IRoute recordAudio = IRoute('Audiocity', '/');
+  static const IRoute recordAudio = IRoute('Recorder', '/');
   static const IRoute listRecordings = IRoute('List Recordings', '/list-recordings');
   static const IRoute settings = IRoute('Settings', '/settings');
 }

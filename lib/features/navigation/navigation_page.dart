@@ -13,22 +13,25 @@ class NavigationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: const CommonTabBar(),
-        body: GetBuilder(
-          init: NavigationController(),
-          builder: (controller) {
-            switch (controller.tabController.index) {
-              case 0:
-                return const RecordAudioPage();
-              case 1:
-                return const ListRecordingsPage();
-              case 2:
-                return const SettingsPage();
-              default:
-                return const RecordAudioPage();
-            }
-          },
+      child: DefaultTabController(
+        length: 3,// fix later
+        child: Scaffold(
+          appBar: const CommonTabBar(),
+          body: GetBuilder(
+            init: NavigationController(),
+            builder: (controller) {
+              switch (controller.tabController.index) {
+                case 0:
+                  return const RecordAudioPage();
+                case 1:
+                  return const ListRecordingsPage();
+                case 2:
+                  return const SettingsPage();
+                default:
+                  return const RecordAudioPage();
+              }
+            },
+          ),
         ),
       ),
     );
