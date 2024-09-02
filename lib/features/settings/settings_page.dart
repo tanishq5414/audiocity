@@ -32,6 +32,16 @@ class SettingsPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           ListTile(
+                            onTap: () => controller.changeSamplingRate(context),
+                            contentPadding: EdgeInsets.zero,
+                            title: Text('Sampling Rate',
+                                style: CustomTextStyles.bodyTextStyleLarge
+                                    .copyWith(color: Pallete.greyColor)),
+                            subtitle:  Text('${controller.samplingRate} Hz', 
+                                style: CustomTextStyles.bodyTextStyle
+                                  .copyWith(color: Pallete.darkGreyColor)),
+                          ),
+                          ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text('Dark Mode',
                                 style: CustomTextStyles.bodyTextStyleLarge

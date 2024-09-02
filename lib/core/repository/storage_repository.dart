@@ -21,6 +21,8 @@ class IStorageRepository {
   void storeMetaData(File file, String fileName) {}
   void checkFileNames() {}
   void storeFileNames(bool value) {}
+  void getSamplingRate() {}
+  void setSamplingRate(int value) {}
 }
 
 class StorageRepository implements IStorageRepository {
@@ -180,5 +182,18 @@ class StorageRepository implements IStorageRepository {
     _path = Directory(selectedPath);
 
     return selectedPath;
+  }
+
+
+  @override
+  Future<int> getSamplingRate() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(EnumsList.samplingRate) ?? 44100;
+  }
+
+  @override
+  Future<void> setSamplingRate(int value) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(EnumsList.samplingRate, value);
   }
 }

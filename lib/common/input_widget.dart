@@ -3,7 +3,7 @@ import 'package:psventuresassignment/common/snack_bar.dart';
 import 'package:psventuresassignment/themes/pallete.dart';
 import 'package:psventuresassignment/themes/styles.dart';
 
-void fileNameInputDialog(BuildContext context, Function(String) onSubmitted) {
+void inputWidgetDialog(BuildContext context, Function(String) onSubmitted, String title, {String? initialValue}) {
   final TextEditingController controller = TextEditingController();
 
   showDialog(
@@ -16,7 +16,7 @@ void fileNameInputDialog(BuildContext context, Function(String) onSubmitted) {
         ),
         backgroundColor: Pallete.primaryColor,
         title:
-            Text('Enter file name', style: CustomTextStyles.titleTextStyleBold),
+            Text(title, style: CustomTextStyles.titleTextStyleBold),
         content: TextField(
           controller: controller,
           autofocus: true,
@@ -34,7 +34,7 @@ void fileNameInputDialog(BuildContext context, Function(String) onSubmitted) {
             onPressed: () {
               String inputValue = controller.text;
               if (inputValue.isEmpty) {
-                showCommonSnackBar(context, 'Please enter a file name');
+                showCommonSnackBar(context, 'Please enter a value');
                 return;
               }
               onSubmitted(inputValue);
