@@ -81,6 +81,7 @@ class StorageRepository implements IStorageRepository {
   @override
   Future<String?> saveFile(String path, String? fileName) async {
     try {
+      await getFolder();
       File file = File(path);
       String newPath = '${_path.path}/${file.path.split('/').last}';
       String fileExtension = file.path.split('.').last;
