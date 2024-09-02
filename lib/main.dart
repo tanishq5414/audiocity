@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psventuresassignment/features/navigation/navigation_page.dart';
+import 'package:psventuresassignment/themes/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Record MP3',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      title: 'AudioCity',
+      theme: AppTheme.theme,
       home: const NavigationPage(),
     );
   }
