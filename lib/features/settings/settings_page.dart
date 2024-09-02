@@ -50,46 +50,12 @@ class SettingsPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Divider(
-                            height: 0.5,
-                            color: Pallete.darkGreyColor,
-                            thickness: 0.5,
-                          ),
-                          ListTile(
-                            onTap: () {
-                              showCommonSnackBar(context, 'Coming Soon');
-                            },
-                            contentPadding: EdgeInsets.zero,
-                            title: Text('Recording Format',
-                                style: CustomTextStyles.bodyTextStyleLarge
-                                    .copyWith(color: Pallete.greyColor)),
-                            subtitle:  Text('Enable Notifications',
-                                style: CustomTextStyles.bodyTextStyle
-                                  .copyWith(color: Pallete.darkGreyColor)),
-                          ),
                           SizedBox(height: 20),
                           Text(
                             'Advanced Settings',
                             style: CustomTextStyles.subTitleTextStyle,
                           ),
                           const SizedBox(height: 10),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text('Sample Rate',
-                                style: CustomTextStyles.bodyTextStyleLarge
-                                    .copyWith(color: Pallete.greyColor)),
-                            subtitle:  Text('Enable Notifications',
-                                style: CustomTextStyles.bodyTextStyle
-                                  .copyWith(color: Pallete.darkGreyColor)),
-                            onTap: () {
-                              showCommonSnackBar(context, 'Coming Soon');
-                            },
-                          ),
-                          const Divider(
-                            height: 0.5,
-                            color: Pallete.darkGreyColor,
-                            thickness: 0.5,
-                          ),
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title:  Text('Ask for filename',
